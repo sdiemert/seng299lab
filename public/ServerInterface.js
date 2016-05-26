@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 /**
  * Created by sdiemert on 2016-05-25.
  */
@@ -30,14 +30,23 @@ class ServerInterface{
             // this function is executed when the request comes 
             // back from the server. 
 
-            if (xhr.readyState == 4 && xhr.status == 200) {
+            if (postXhr.readyState == 4 && postXhr.status == 200) {
                 callback(null);
-            }else if(xhr.readyState == 4 && xhr.status !== 200){
-                callback(xhr.status);
+            }else if(postXhr.readyState == 4 && postXhr.status !== 200){
+                callback(postXhr.status);
             }
         }
     }
-    
+
+    /**
+     * Makes a request to add a new task to the server.
+     * 
+     * @param name {string} the name of the task
+     * @param project {string} the name of the project
+     * @param start {Date} when the timer was started.
+     * @param stop {Date} when the timer was stopped
+     * @param cb {function} to call when request comes back. 
+     */
     addTask(name, project, start, stop, cb){
         
         this._sendData(
@@ -48,10 +57,33 @@ class ServerInterface{
                     console.log("Error adding task: "+err);
                     cb(err);
                 }else{
-                    cb(err);
+                    cb(null);
                 }
             }
         );
+        
+    }
+
+    /**
+     * Makes a request to remove a task from the server's memory.  
+     * 
+     * @param index {number} the index of the task to remove.
+     * @param cb {function} to call when the request comes back. 
+     */
+    removeTask(index, cb){
+        
+        this._sendData(
+            {index : index},
+            "/remove",
+            function(err){
+                if(err){
+                    console.log("Error adding task: "+err);
+                    cb(err);
+                }else{
+                    cb(null);
+                }
+            }
+        )
         
     }
 

@@ -43,9 +43,7 @@ function startTimer() {
 function timerLoop() {
     setTimeout(function () {
         if (currentTask) {
-
             document.getElementById("timer-time").innerHTML = makeTimeDiff(currentTask.startTime, new Date());
-
             timerLoop()
         }
     }, 1000);
@@ -79,14 +77,27 @@ function stopTimer() {
 function rebuildTable(objects) {
 
     var t = document.getElementById("table-body");
-
+    
     //first delete the old table (if it exists).
+    t.innerHTML = "";
 
-    var r, cName, cProject, cStart, cEnd, cTime;
-
+    var r, cName, cProject, cStart, cEnd, cTime, dC;
     var sTime, eTime, diff;
+    var delBtn;
 
+    // Now go through and rebuild the table.
     for (var i = 0; i < objects.length; i++) {
+        
+        delBtn = document.createElement("button");
+        delBtn.innerHTML = "Delete";
+    
+        delBtn.onclick = function() {
+            serverInterface.removeTask(i-1, function (err) {
+                serverInterface.getData(function(err, data){
+                    rebuildTable(data);
+                });
+            });
+        };
 
         r = t.insertRow(i);
 
@@ -95,6 +106,8 @@ function rebuildTable(objects) {
         cStart   = r.insertCell(2);
         cEnd     = r.insertCell(3);
         cTime    = r.insertCell(4);
+
+        r.insertCell(5).appendChild(delBtn);
 
         sTime = new Date(objects[i].startTime);
         eTime = new Date(objects[i].endTime);

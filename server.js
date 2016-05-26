@@ -21,20 +21,27 @@ var myData = [
 
 app.get("/data", function(req, res){
     
-	console.log("GET Request to: /");
+	console.log("GET Request to: /data");
 	res.json(myData);
     
 });
 
 app.post("/add", function(req, res){
     
-    console.log("POST Request to: /");
+    console.log("POST Request to: /add");
     console.log(req.body);
 	
 	myData.push(req.body);
+	res.status(200).send(); 
+});
 
-    // do something with the data that is in the obj. 
-    // maybe you could store it in the myData array???
+app.post("/remove", function(req, res){
+
+	console.log("POST Request to: /remove");
+	console.log(req.body);
+	myData.splice(req.body.index, 1);
+	res.status(200).send(); 
+	
 });
 
 app.listen(3000, function(){
