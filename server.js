@@ -3,11 +3,16 @@
 var express    = require("express");
 var bodyParser = require("body-parser");
 
-var MongoDB = require('./lib/MemoryDB');
+// The server currently uses an in memory
+// data store. You must implement the required
+// functionality in ./lib/storage.js and 
+// switch out this variable. 
+var Storage = require('./lib/MemoryDB');
+//var Storage = require('./lib/storage');
 
 var app = express();
 
-var db = new MongoDB(null, null, 'timer');
+var db = new Storage(null, null, 'timer');
 
 // use the parse to get JSON objects out of the request. 
 app.use(bodyParser.json());
@@ -35,6 +40,7 @@ app.get("/data", function (req, res) {
  * Adds a task to the data store.
  */
 app.post("/add", function (req, res) {
+
     console.log("POST Request to: /add");
     
     db.addTask(req.body, function(err){
@@ -52,6 +58,7 @@ app.post("/add", function (req, res) {
  * Removes a task from the data store.
  */
 app.post("/remove", function (req, res) {
+    
     console.log("POST Request to: /remove");
     console.log(req.body);
 
@@ -62,7 +69,6 @@ app.post("/remove", function (req, res) {
             res.status(200).send();
         }
     });
-  
 
 });
 
@@ -71,7 +77,7 @@ app.listen(process.env.PORT || 3000, function () {
     console.log("Listening on port 3000");
     
     db.connect(function(){
-        console.log("Connected to DB");
+        // some message here....
     });
     
 });
