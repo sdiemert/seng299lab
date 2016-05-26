@@ -1,13 +1,13 @@
+"use strict";
 
-// File: express-server-static.js
-
-// Example from: http://expressjs.com/en/starter/hello-world.html
-// static file serving: http://expressjs.com/en/starter/static-files.html
-
-var express = require("express");
+var express    = require("express");
 var bodyParser = require("body-parser");
 
+var MongoDB = require('./lib/MemoryDB');
+
 var app = express();
+
+var db = new MongoDB(null, null, 'timer');
 
 // use the parse to get JSON objects out of the request. 
 app.use(bodyParser.json());
@@ -15,35 +15,63 @@ app.use(bodyParser.json());
 // server static files from the public/ directory.
 app.use(express.static('public'));
 
-var myData = [
-   // {project : 'lion', name : 'alex', startTime : new Date('2016-01-01T12:00:00'), endTime : new Date("2016-01-01T14:37:12")},
-];
-
-app.get("/data", function(req, res){
+/**
+ * Handle a request for task data.
+ */
+app.get("/data", function (req, res) {
+    console.log("GET Request to: /data");
     
-	console.log("GET Request to: /data");
-	res.json(myData);
+     db.getAllTasks(function(err, data){
+         if(err){
+            res.status(500).send();
+        }else{
+            res.status(200).json(data);
+        } 
+     });
     
 });
 
-app.post("/add", function(req, res){
-    
+/**
+ * Adds a task to the data store.
+ */
+app.post("/add", function (req, res) {
     console.log("POST Request to: /add");
+    
+    db.addTask(req.body, function(err){
+        if(err){
+            res.status(500).send();
+        }else{
+            res.status(200).send();
+        }
+    });
+    
+    res.status(200).send();
+});
+
+/**
+ * Removes a task from the data store.
+ */
+app.post("/remove", function (req, res) {
+    console.log("POST Request to: /remove");
     console.log(req.body);
-	
-	myData.push(req.body);
-	res.status(200).send(); 
+
+    db.removeTask(req.body.id, function(err){
+        if(err){
+            res.status(500).send();
+        }else{
+            res.status(200).send();
+        }
+    });
+  
+
 });
 
-app.post("/remove", function(req, res){
-
-	console.log("POST Request to: /remove");
-	console.log(req.body);
-	myData.splice(req.body.index, 1);
-	res.status(200).send(); 
-	
-});
-
-app.listen(3000, function(){
-	console.log("Listening on port 3000");
+app.listen(process.env.PORT || 3000, function () {
+    
+    console.log("Listening on port 3000");
+    
+    db.connect(function(){
+        console.log("Connected to DB");
+    });
+    
 });

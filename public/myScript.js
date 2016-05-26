@@ -54,30 +54,34 @@ function stopTimer() {
     currentTask.endTime = new Date();
 
     serverInterface.addTask(
-        currentTask.name, 
-        currentTask.project, 
-        currentTask.startTime, 
-        currentTask.endTime, 
-        function(data){
-            serverInterface.getData(function(err, data){
-                if(err){
-                    console.log("Error getting data: "+err);
-                }else{
+        currentTask.name,
+        currentTask.project,
+        currentTask.startTime,
+        currentTask.endTime,
+        function (data) {
+            serverInterface.getData(function (err, data) {
+                if (err) {
+                    console.log("Error getting data: " + err);
+                } else {
                     rebuildTable(data);
                 }
             });
         }
     );
-    
+
     document.getElementById("start-button").disabled = false;
-    currentTask                                      = null;
-    
+    document.getElementById("stop-button").disabled = true;
+    document.getElementById("timer-time").innerHTML  = "";
+    document.getElementById("task-name").value = "";
+    document.getElementById("project").value = "";
+
+    currentTask = null;
 }
 
 function rebuildTable(objects) {
 
     var t = document.getElementById("table-body");
-    
+
     //first delete the old table (if it exists).
     t.innerHTML = "";
 
@@ -87,19 +91,21 @@ function rebuildTable(objects) {
 
     // Now go through and rebuild the table.
     for (var i = 0; i < objects.length; i++) {
-        
-        delBtn = document.createElement("button");
+
+        delBtn           = document.createElement("button");
         delBtn.innerHTML = "Delete";
-    
-        delBtn.onclick = function() {
-            serverInterface.removeTask(i-1, function (err) {
-                serverInterface.getData(function(err, data){
+
+        delBtn.onclick = function () {
+            serverInterface.removeTask(objects[i - 1].id, function (err) {
+                serverInterface.getData(function (err, data) {
                     rebuildTable(data);
                 });
             });
         };
 
         r = t.insertRow(i);
+
+        r.setAttribute("task-id", objects[i].id);
 
         cName    = r.insertCell(0);
         cProject = r.insertCell(1);
@@ -146,13 +152,13 @@ function makeTimeString(d) {
 
 function makeTimeDiff(d1, d2) {
 
-    var secs = Math.floor((d2 - d1) / 1000);
-    var mins = Math.floor(secs / 60);
+    var secs  = Math.floor((d2 - d1) / 1000);
+    var mins  = Math.floor(secs / 60);
     var hours = Math.floor(mins / 60);
 
     var s = "";
     s += (hours >= 10) ? hours + ":" : "0" + hours + ":";
-    s += (mins%60 >= 10) ? mins%60 + ":" : "0" + mins%60 + ":";
+    s += (mins % 60 >= 10) ? mins % 60 + ":" : "0" + mins % 60 + ":";
     s += (secs % 60 >= 10) ? secs % 60 : "0" + secs % 60;
 
     return s;

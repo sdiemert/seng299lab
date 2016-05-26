@@ -6,7 +6,7 @@
         <title>SENG 299 Time Tracker App</title>
 
         <!-- Load bootstrap to make things look pretty.... -->
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"/>
 
     </head>
     <body>
@@ -32,12 +32,14 @@
                             <input type="text" class="form-control" id="project" placeholder="">
                         </div>
 
-                        <button class="btn btn-success" id='start-button' onclick="startTimer();">Start</button>
-                        <button class="btn btn-danger" id='stop-button' disabled="disabled" onclick="stopTimer();">Stop</button>
+                        <button type='button' class="btn btn-success" id='start-button' onclick="startTimer();">Start</button>
+                        <button type='button' class="btn btn-danger" id='stop-button' disabled="disabled" onclick="stopTimer();">Stop</button>
 
                         <span id="timer-time" style="margin-left:25px;"></span>
 
+
                     </form>
+
 
                 </div>
             </div>

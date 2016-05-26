@@ -70,10 +70,10 @@ class ServerInterface{
      * @param index {number} the index of the task to remove.
      * @param cb {function} to call when the request comes back. 
      */
-    removeTask(index, cb){
+    removeTask(id, cb){
         
         this._sendData(
-            {index : index},
+            {id : id},
             "/remove",
             function(err){
                 if(err){
