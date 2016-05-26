@@ -16,18 +16,18 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 var myData = [
-    {animal : 'lion', name : 'alex'},
-    {animal : 'hippo', name : 'gloria'},
-    {animal : 'giraffe', name : 'melmen'},
-    {animal : 'zebra', name : 'marty'},
+   // {project : 'lion', name : 'alex', startTime : new Date('2016-01-01T12:00:00'), endTime : new Date("2016-01-01T14:37:12")},
 ];
 
 app.get("/data", function(req, res){
+    
 	console.log("GET Request to: /");
 	res.json(myData);
+    
 });
 
 app.post("/data", function(req, res){
+    
     console.log("POST Request to: /");
     console.log(req.body);
 
