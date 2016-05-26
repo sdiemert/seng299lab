@@ -32,8 +32,10 @@
                             <input type="text" class="form-control" id="project" placeholder="">
                         </div>
 
-                        <button class="btn btn-success" onclick="startTimer();">Start</button>
-                        <button class="btn btn-danger" onclick="stopTimer();">Stop</button>
+                        <button class="btn btn-success" id='start-button' onclick="startTimer();">Start</button>
+                        <button class="btn btn-danger" id='stop-button' disabled="disabled" onclick="stopTimer();">Stop</button>
+
+                        <span id="timer-time" style="margin-left:25px;"></span>
 
                     </form>
 
@@ -56,7 +58,7 @@
         </div>
 
 
-       <!-- <script type="text/javascript" src="myScript.js"></script> -->
+       <script type="text/javascript" src="myScript.js"></script>
     </body>
 
 </html>
