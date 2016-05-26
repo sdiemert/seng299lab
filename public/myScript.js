@@ -24,7 +24,7 @@ function startTimer() {
 
         currentTask           = {};
         currentTask.name      = name;
-        currentTask.project   = project;
+        currentTask.project   = proj;
         currentTask.startTime = new Date();
         currentTask.endTime   = null;
 
@@ -53,9 +53,27 @@ function timerLoop() {
 
 function stopTimer() {
 
+    currentTask.endTime = new Date();
+
+    serverInterface.addTask(
+        currentTask.name, 
+        currentTask.project, 
+        currentTask.startTime, 
+        currentTask.endTime, 
+        function(data){
+            serverInterface.getData(function(err, data){
+                if(err){
+                    console.log("Error getting data: "+err);
+                }else{
+                    rebuildTable(data);
+                }
+            });
+        }
+    );
+    
     document.getElementById("start-button").disabled = false;
     currentTask                                      = null;
-
+    
 }
 
 function rebuildTable(objects) {

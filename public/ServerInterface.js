@@ -18,13 +18,10 @@ class ServerInterface{
      */
     _sendData(obj, path, callback){
 
-        var u = this._url +":"+ this._port + path;
-
-        console.log("sending POST to "+u);
-
-        var obj = { number : 10};
+        console.log("sending POST to "+path);
+        
         var postXhr = new XMLHttpRequest();
-        postXhr.open("POST", u, true);
+        postXhr.open("POST", path, true);
         postXhr.setRequestHeader("Content-type", "application/json");
         postXhr.send(JSON.stringify(obj));
 
@@ -39,6 +36,23 @@ class ServerInterface{
                 callback(xhr.status);
             }
         }
+    }
+    
+    addTask(name, project, start, stop, cb){
+        
+        this._sendData(
+            {name : name, project : project, startTime : start, endTime : stop},
+            "/add",
+            function(err){
+                if(err){
+                    console.log("Error adding task: "+err);
+                    cb(err);
+                }else{
+                    cb(err);
+                }
+            }
+        );
+        
     }
 
     /**

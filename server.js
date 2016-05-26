@@ -26,10 +26,12 @@ app.get("/data", function(req, res){
     
 });
 
-app.post("/data", function(req, res){
+app.post("/add", function(req, res){
     
     console.log("POST Request to: /");
     console.log(req.body);
+	
+	myData.push(req.body);
 
     // do something with the data that is in the obj. 
     // maybe you could store it in the myData array???
