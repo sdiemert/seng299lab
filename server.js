@@ -7,7 +7,7 @@ var bodyParser = require("body-parser");
 // data store. You must implement the required
 // functionality in ./lib/storage.js and 
 // switch out this variable. 
-var Storage = require('./lib/MemoryDB');
+var Storage = require('./lib/MongoDB');
 //var Storage = require('./lib/storage');
 
 var app = express();
@@ -30,6 +30,7 @@ app.get("/data", function (req, res) {
          if(err){
             res.status(500).send();
         }else{
+            console.log(data)
             res.status(200).json(data);
         } 
      });
@@ -62,7 +63,7 @@ app.post("/remove", function (req, res) {
     console.log("POST Request to: /remove");
     console.log(req.body);
 
-    db.removeTask(req.body.id, function(err){
+    db.removeTask(parseInt(req.body.id), function(err){
         if(err){
             res.status(500).send();
         }else{

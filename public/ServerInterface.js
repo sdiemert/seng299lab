@@ -18,7 +18,7 @@ class ServerInterface{
      */
     _sendData(obj, path, callback){
 
-        console.log("sending POST to "+path);
+        console.log("sending POST to "+path +" payload: "+JSON.stringify(obj));
         
         var postXhr = new XMLHttpRequest();
         postXhr.open("POST", path, true);
@@ -71,7 +71,6 @@ class ServerInterface{
      * @param cb {function} to call when the request comes back. 
      */
     removeTask(id, cb){
-        
         this._sendData(
             {id : id},
             "/remove",

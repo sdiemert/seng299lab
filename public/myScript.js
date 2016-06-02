@@ -94,9 +94,10 @@ function rebuildTable(objects) {
 
         delBtn           = document.createElement("button");
         delBtn.innerHTML = "Delete";
+        delBtn.setAttribute("task-id", objects[i].id);
 
         delBtn.onclick = function () {
-            serverInterface.removeTask(objects[i - 1].id, function (err) {
+            serverInterface.removeTask(this.getAttribute('task-id'), function (err) {
                 serverInterface.getData(function (err, data) {
                     rebuildTable(data);
                 });
