@@ -12,6 +12,34 @@
 var SVGNameSpace = "http://www.w3.org/2000/svg";
 
 /**
+ * Makes a new SVG line object and returns it. 
+ *
+ * @param x1 {number} 
+ * @param y1 {number}
+ * @param x2 {number}
+ * @param y2 {number}
+ * @param color {string} the color of the line
+ * @param stroke {number} the thickness of the line.
+ * @returns {object}
+ *
+ * This has been implemented to provide an example. 
+ */
+function makeLine(x1, y1, x2, y2, color, stroke) {
+
+    var e = document.createElementNS(SVGNameSpace, "line");
+    e.setAttribute("x1", x1);
+    e.setAttribute("y1", y1);
+    e.setAttribute("x2", x2);
+    e.setAttribute("y2", y2);
+
+    e.style.stroke      = color || "#000000";
+    e.style.strokeWidth = stroke || 2;
+
+    return e;
+
+}
+
+/**
 * Makes and returns a new SVG rectange object. 
 * 
 * @param x {number} the x position of the rectangle.
@@ -58,7 +86,7 @@ function makeCircle(x, y, r, c){
 * 
 * @return {object} 
 */
-function makeCircle(w, h){
+function makeSVG(w, h){
     var s = document.createElementNS(SVGNameSpace, "svg"); 
     s.setAttribute("width", w); 
     s.setAttribute("height", w); 
