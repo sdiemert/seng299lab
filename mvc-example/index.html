@@ -1,0 +1,27 @@
+<html>
+    <head></head>
+    <body>
+        <div>
+
+            <form>
+                <input id="data-in" type="text"> 
+            </form>
+            <button id='add-data' onclick='view.addData()'>Add</button>
+        </div>
+        <div id='content'></div>
+        
+        <script type='text/javascript' src="controller.js"></script>
+        <script type='text/javascript' src="view.js"></script>
+        <script type='text/javascript' src="model.js"></script>
+        <script type='text/javascript'>
+            var control = new Controller(); 
+            var view = new View(); 
+            var model = new Model(); 
+            control.setView(view);
+            control.setModel(model);
+            model.setView(view);
+            view.setModel(model);
+            view.setControl(control);
+        </script>
+    </body>
+</html>
