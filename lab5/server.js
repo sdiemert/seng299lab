@@ -3,25 +3,14 @@
 var express    = require("express");
 var bodyParser = require("body-parser");
 
-// The server currently uses an in memory
-// data store. You must implement the required
-// functionality in ./lib/storage.js and 
-// switch out this variable. 
 var Storage = require('./lib/MongoDB');
-//var Storage = require('./lib/storage');
+
+// run server with: PORT=XXXXX node server.js 
+// to have it bind to a port from the cmd line.
+// or change the port number here...
+var port = process.env.PORT || 3000;
 
 var app = express();
-
-
-/*
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    next();
-});
-*/
-
 
 var db = new Storage(null, null, 'timer');
 
@@ -84,9 +73,10 @@ app.post("/remove", function (req, res) {
 
 });
 
-app.listen(process.env.PORT || 3000, function () {
+
+app.listen(port, function () {
     
-    console.log("Listening on port 30000");
+    console.log("Listening on port "+port);
     
     db.connect(function(){
         // some message here....

@@ -1,0 +1,16 @@
+{
+  "name": "seng299-lab3",
+  "version": "1.0.0",
+  "description": "Time tracker application for seng 299 lab 3 summer 2016",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sdiemert",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "mongodb": "^2.1.20"
+  }
+}
