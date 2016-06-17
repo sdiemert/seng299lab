@@ -1,0 +1,14 @@
+{
+  "name": "lab4",
+  "version": "1.0.0",
+  "description": "lab 4 exercises",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sdiemert",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
